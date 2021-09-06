@@ -1,151 +1,1187 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <!-- ... -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="css/tailwind.css" rel="stylesheet" />
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="css/swiper-bundle.min.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+      defer
+    ></script>
+    <style>
+      .nav-fixed {
+        position: static;
+      }
+
+      @media only screen and (min-width: 768px) {
+        .nav-fixed {
+          position: fixed;
+        }
+      }
+
+      .swiper {
+        width: 100%;
+        height: 24rem;
+      }
+
+      .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .slider-bg {
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+    </style>
   </head>
   <body>
     <!-- ... -->
-    <nav
-      class="
-        relative
-        flex flex-wrap
-        items-center
-        justify-between
-        px-2
-        py-3
-        bg-pink-500
-        mb-3
-      "
-    >
+    <!-- component fixed -->
+    <header class="fixed shadow-md md:relative z-10 w-full">
+      <div class="antialiased bg-gray-100">
+        <div class="w-full text-gray-700 bg-white">
+          <div
+            x-data="{ open: false }"
+            class="
+              flex flex-col
+              px-4
+              mx-auto
+              md:items-center md:justify-between md:px-6
+              lg:px-8
+            "
+          >
+            <div class="flex flex-row items-center justify-between p-4">
+              <a
+                href="#"
+                class="
+                  text-lg
+                  font-semibold
+                  tracking-widest
+                  text-gray-900
+                  uppercase
+                  rounded-lg
+                  focus:outline-none focus:shadow-outline
+                "
+                >ERA</a
+              >
+              <button
+                class="
+                  rounded-lg
+                  md:hidden
+                  focus:outline-none focus:shadow-outline
+                "
+                @click="open = !open"
+              >
+                <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
+                  <path
+                    x-show="!open"
+                    fill-rule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM9 15a1 1 0 011-1h6a1 1 0 110 2h-6a1 1 0 01-1-1z"
+                    clip-rule="evenodd"
+                  ></path>
+                  <path
+                    x-show="open"
+                    fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <nav
+              :class="{'flex': open, 'hidden': !open}"
+              id="navbar"
+              class="
+                flex-col flex-grow flex-wrap
+                hidden
+                pb-4
+                uppercase
+                bg-white
+                border-b-2 border-gray-300
+                md:pb-0 md:flex md:flex-row
+              "
+            >
+              <a
+                class="
+                  px-4
+                  py-2
+                  mt-2
+                  text-sm
+                  font-semibold
+                  bg-transparent
+                  rounded-lg
+                  uppercase
+                  md:mt-0 md:ml-4
+                  hover:text-gray-900
+                  focus:text-gray-900
+                  hover:bg-gray-200
+                  focus:bg-gray-200 focus:outline-none focus:shadow-outline
+                "
+                href="/"
+                >Home</a
+              >
+              <!-- Services Start -->
+              <div
+                @click.away="open = false"
+                class="relative"
+                x-data="{ open: false }"
+              >
+                <button
+                  @click="open = !open"
+                  class="
+                    flex flex-row
+                    text-gray-900
+                    items-center
+                    w-full
+                    px-4
+                    py-2
+                    mt-2
+                    text-sm
+                    font-semibold
+                    text-left
+                    bg-transparent
+                    uppercase
+                    rounded-lg
+                    md:w-auto md:inline md:mt-0 md:ml-4
+                    hover:text-gray-900
+                    focus:text-gray-900 focus:outline-none focus:shadow-outline
+                  "
+                >
+                  <span>Services</span>
+                  <svg
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    :class="{'rotate-180': open, 'rotate-0': !open}"
+                    class="
+                      inline
+                      w-4
+                      h-4
+                      mt-1
+                      ml-1
+                      transition-transform
+                      duration-200
+                      transform
+                      md:-mt-1
+                    "
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+                <div
+                  x-show="open"
+                  x-transition:enter="transition ease-out duration-100"
+                  x-transition:enter-start="transform opacity-0 scale-95"
+                  x-transition:enter-end="transform opacity-100 scale-100"
+                  x-transition:leave="transition ease-in duration-75"
+                  x-transition:leave-start="transform opacity-100 scale-100"
+                  x-transition:leave-end="transform opacity-0 scale-95"
+                  class="
+                    hover:block
+                    absolute
+                    right-0
+                    mt-2
+                    origin-top-right
+                    z-30
+                  "
+                >
+                  <div
+                    class="
+                      px-2
+                      py-2
+                      w-full
+                      flex flex-col
+                      bg-white
+                      rounded-md
+                      shadow-lg
+                    "
+                  >
+                    <a
+                      class="
+                        px-2
+                        py-2
+                        text-center text-sm
+                        uppercase
+                        border-b border-gray-300
+                        hover:text-gray-900
+                        focus:text-gray-900
+                        hover:bg-gray-200
+                        focus:bg-gray-200
+                        focus:outline-none
+                        focus:shadow-outline
+                      "
+                      href="#"
+                      >Sap Implementation and support</a
+                    >
+                    <a
+                      class="
+                        px-2
+                        py-2
+                        text-center text-sm
+                        uppercase
+                        border-b border-gray-300
+                        hover:text-gray-900
+                        focus:text-gray-900
+                        hover:bg-gray-200
+                        focus:bg-gray-200
+                        focus:outline-none
+                        focus:shadow-outline
+                      "
+                      href="#"
+                      >ISO Certification and Management System Implementation</a
+                    >
+                    <a
+                      class="
+                        px-2
+                        py-2
+                        text-center text-sm
+                        uppercase
+                        border-b border-gray-300
+                        hover:text-gray-900
+                        focus:text-gray-900
+                        hover:bg-gray-200
+                        focus:bg-gray-200
+                        focus:outline-none
+                        focus:shadow-outline
+                      "
+                      href="#"
+                      >Environmental Health Safety Management Services</a
+                    >
+                    <a
+                      class="
+                        px-2
+                        py-2
+                        text-center text-sm
+                        uppercase
+                        hover:text-gray-900
+                        focus:text-gray-900
+                        hover:bg-gray-200
+                        focus:bg-gray-200
+                        focus:outline-none
+                        focus:shadow-outline
+                      "
+                      href="#"
+                      >HR Outsourcing</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Services End -->
+
+              <!-- Corporate Training Start -->
+              <div
+                @click.away="open = false"
+                class="relative"
+                x-data="{ open: false }"
+              >
+                <button
+                  @click="open = !open"
+                  class="
+                    flex flex-row
+                    text-gray-900
+                    items-center
+                    w-full
+                    px-4
+                    py-2
+                    mt-2
+                    text-sm
+                    font-semibold
+                    text-left
+                    bg-transparent
+                    uppercase
+                    rounded-lg
+                    md:w-auto md:inline md:mt-0 md:ml-4
+                    hover:text-gray-900
+                    focus:text-gray-900 focus:outline-none focus:shadow-outline
+                  "
+                >
+                  <span>Corporate Training</span>
+                  <svg
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    :class="{'rotate-180': open, 'rotate-0': !open}"
+                    class="
+                      inline
+                      w-4
+                      h-4
+                      mt-1
+                      ml-1
+                      transition-transform
+                      duration-200
+                      transform
+                      md:-mt-1
+                    "
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+                <div
+                  x-show="open"
+                  x-transition:enter="transition ease-out duration-100"
+                  x-transition:enter-start="transform opacity-0 scale-95"
+                  x-transition:enter-end="transform opacity-100 scale-100"
+                  x-transition:leave="transition ease-in duration-75"
+                  x-transition:leave-start="transform opacity-100 scale-100"
+                  x-transition:leave-end="transform opacity-0 scale-95"
+                  class="
+                    hover:block
+                    absolute
+                    right-0
+                    mt-2
+                    origin-top-right
+                    z-30
+                  "
+                >
+                  <div
+                    class="
+                      px-2
+                      py-2
+                      w-full
+                      flex flex-col
+                      bg-white
+                      rounded-md
+                      shadow-lg
+                    "
+                  >
+                    <a
+                      class="
+                        text-center text-sm
+                        uppercase
+                        px-3
+                        py-2
+                        border-b border-gray-300
+                        hover:text-gray-900
+                        focus:text-gray-900
+                        hover:bg-gray-200
+                        focus:bg-gray-200
+                        focus:outline-none
+                        focus:shadow-outline
+                      "
+                      href="#"
+                      >Our Objectives</a
+                    >
+                    <a
+                      class="
+                        text-center text-sm
+                        uppercase
+                        px-3
+                        py-2
+                        border-b border-gray-300
+                        hover:text-gray-900
+                        focus:text-gray-900
+                        hover:bg-gray-200
+                        focus:bg-gray-200
+                        focus:outline-none
+                        focus:shadow-outline
+                      "
+                      href="#"
+                      >Accreditation</a
+                    >
+                    <a
+                      class="
+                        text-center text-sm
+                        uppercase
+                        px-3
+                        py-2
+                        border-b border-gray-300
+                        hover:text-gray-900
+                        focus:text-gray-900
+                        hover:bg-gray-200
+                        focus:bg-gray-200
+                        focus:outline-none
+                        focus:shadow-outline
+                      "
+                      href="#"
+                      >Courses</a
+                    >
+                    <a
+                      class="
+                        text-center text-sm
+                        uppercase
+                        px-3
+                        py-2
+                        border-b border-gray-300
+                        hover:text-gray-900
+                        focus:text-gray-900
+                        hover:bg-gray-200
+                        focus:bg-gray-200
+                        focus:outline-none
+                        focus:shadow-outline
+                      "
+                      href="#"
+                      >Clients</a
+                    >
+                    <a
+                      class="
+                        text-center text-sm
+                        uppercase
+                        px-3
+                        py-2
+                        hover:text-gray-900
+                        focus:text-gray-900
+                        hover:bg-gray-200
+                        focus:bg-gray-200
+                        focus:outline-none
+                        focus:shadow-outline
+                      "
+                      href="#"
+                      >Case Study</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <!-- Corporate Training End -->
+
+              <!-- Management Start -->
+              <a
+                class="
+                  px-4
+                  py-2
+                  mt-2
+                  text-sm
+                  font-semibold
+                  bg-transparent
+                  rounded-lg
+                  dark-mode:bg-transparent
+                  dark-mode:hover:bg-gray-600
+                  dark-mode:focus:bg-gray-600
+                  dark-mode:focus:text-white
+                  dark-mode:hover:text-white
+                  dark-mode:text-gray-200
+                  md:mt-0 md:ml-4
+                  hover:text-gray-900
+                  focus:text-gray-900
+                  hover:bg-gray-200
+                  focus:bg-gray-200 focus:outline-none focus:shadow-outline
+                "
+                href="#"
+                >Management</a
+              >
+              <!-- Management End -->
+
+              <!-- HSE Start -->
+              <a
+                class="
+                  px-4
+                  py-2
+                  mt-2
+                  text-sm
+                  font-semibold
+                  bg-transparent
+                  rounded-lg
+                  dark-mode:bg-transparent
+                  dark-mode:hover:bg-gray-600
+                  dark-mode:focus:bg-gray-600
+                  dark-mode:focus:text-white
+                  dark-mode:hover:text-white
+                  dark-mode:text-gray-200
+                  md:mt-0 md:ml-4
+                  hover:text-gray-900
+                  focus:text-gray-900
+                  hover:bg-gray-200
+                  focus:bg-gray-200 focus:outline-none focus:shadow-outline
+                "
+                href="#"
+                >HSE</a
+              >
+              <!-- HSE End -->
+
+              <!-- IRCA/PECB Start -->
+              <div
+                @click.away="open = false"
+                class="relative"
+                x-data="{ open: false }"
+              >
+                <button
+                  @click="open = !open"
+                  class="
+                    flex
+                    text-gray-900
+                    items-center
+                    w-full
+                    px-4
+                    py-2
+                    mt-2
+                    text-sm
+                    font-semibold
+                    text-left
+                    bg-transparent
+                    rounded-lg
+                    uppercase
+                    md:w-auto md:inline md:mt-0 md:ml-4
+                    hover:text-gray-900
+                    focus:text-gray-900 focus:outline-none focus:shadow-outline
+                  "
+                >
+                  <span>irca/pecb</span>
+                  <svg
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    :class="{'rotate-180': open, 'rotate-0': !open}"
+                    class="
+                      inline
+                      w-4
+                      h-4
+                      mt-1
+                      ml-1
+                      transition-transform
+                      duration-200
+                      transform
+                      md:-mt-1
+                    "
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+                <div
+                  x-show="open"
+                  x-transition:enter="transition ease-out duration-100"
+                  x-transition:enter-start="transform opacity-0 scale-95"
+                  x-transition:enter-end="transform opacity-100 scale-100"
+                  x-transition:leave="transition ease-in duration-75"
+                  x-transition:leave-start="transform opacity-100 scale-100"
+                  x-transition:leave-end="transform opacity-0 scale-95"
+                  class="
+                    absolute
+                    right-0
+                    w-full
+                    md:max-w-screen-sm md:w-screen
+                    mt-2
+                    origin-top-right
+                  "
+                >
+                  <div class="px-2 pt-2 pb-4 bg-white rounded-md shadow-lg">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <a
+                        class="
+                          flex
+                          row
+                          items-start
+                          rounded-lg
+                          bg-transparent
+                          uppercase
+                          p-2
+                          hover:text-gray-900
+                          focus:text-gray-900
+                          hover:bg-gray-200
+                          focus:bg-gray-200
+                          focus:outline-none
+                          focus:shadow-outline
+                        "
+                        href="#"
+                      >
+                        <div class="ml-3">
+                          <p>ISO 9001 QUALITY MANAGEMENT SYSTEM (QMS)</p>
+                        </div>
+                      </a>
+
+                      <a
+                        class="
+                          flex
+                          row
+                          items-start
+                          rounded-lg
+                          bg-transparent
+                          p-2
+                          hover:text-gray-900
+                          focus:text-gray-900
+                          hover:bg-gray-200
+                          focus:bg-gray-200
+                          focus:outline-none
+                          focus:shadow-outline
+                        "
+                        href="#"
+                      >
+                        <div class="ml-3">
+                          <p>ISO 14001 ENVIRONMENTAL MANAGEMENT SYSTEM (EMS)</p>
+                        </div>
+                      </a>
+                      <a
+                        class="
+                          flex
+                          row
+                          items-start
+                          rounded-lg
+                          bg-transparent
+                          p-2
+                          hover:text-gray-900
+                          focus:text-gray-900
+                          hover:bg-gray-200
+                          focus:bg-gray-200
+                          focus:outline-none
+                          focus:shadow-outline
+                        "
+                        href="#"
+                      >
+                        <div class="ml-3">
+                          <p>
+                            ISO 45001 OCCUPATIONAL HEALTH AND SAFETY MANAGEMENT
+                          </p>
+                        </div>
+                      </a>
+                      <a
+                        class="
+                          flex
+                          row
+                          items-start
+                          rounded-lg
+                          bg-transparent
+                          p-2
+                          hover:text-gray-900
+                          focus:text-gray-900
+                          hover:bg-gray-200
+                          focus:bg-gray-200
+                          focus:outline-none
+                          focus:shadow-outline
+                        "
+                        href="#"
+                      >
+                        <div class="ml-3">
+                          <p>ISO 31000 RISK MANAGEMENT</p>
+                        </div>
+                      </a>
+                      <a
+                        class="
+                          flex
+                          row
+                          items-start
+                          rounded-lg
+                          bg-transparent
+                          p-2
+                          hover:text-gray-900
+                          focus:text-gray-900
+                          hover:bg-gray-200
+                          focus:bg-gray-200
+                          focus:outline-none
+                          focus:shadow-outline
+                        "
+                        href="#"
+                      >
+                        <div class="ml-3">
+                          <p>ISO/IEC 20000 IT SERVICE MANAGEMENT</p>
+                        </div>
+                      </a>
+                      <a
+                        class="
+                          flex
+                          row
+                          items-start
+                          rounded-lg
+                          bg-transparent
+                          p-2
+                          hover:text-gray-900
+                          focus:text-gray-900
+                          hover:bg-gray-200
+                          focus:bg-gray-200
+                          focus:outline-none
+                          focus:shadow-outline
+                        "
+                        href="#"
+                      >
+                        <div class="ml-3">
+                          <p>ISO/IEC 27001 INFORMATION SECURITY</p>
+                        </div>
+                      </a>
+                      <a
+                        class="
+                          flex
+                          row
+                          items-start
+                          rounded-lg
+                          bg-transparent
+                          p-2
+                          hover:text-gray-900
+                          focus:text-gray-900
+                          hover:bg-gray-200
+                          focus:bg-gray-200
+                          focus:outline-none
+                          focus:shadow-outline
+                        "
+                        href="#"
+                      >
+                        <div class="ml-3">
+                          <p>SIX SIGMA</p>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- IRCA/PECB End -->
+
+              <!-- Hr Training Start -->
+              <a
+                class="
+                  px-4
+                  py-2
+                  mt-2
+                  text-sm
+                  uppercase
+                  font-semibold
+                  bg-transparent
+                  rounded-lg
+                  md:mt-0 md:ml-4
+                  hover:text-gray-900
+                  focus:text-gray-900
+                  hover:bg-gray-200
+                  focus:bg-gray-200 focus:outline-none focus:shadow-outline
+                "
+                href="#"
+                >hr Training</a
+              >
+              <!-- Hr Training End -->
+
+              <!-- SAP Training Start -->
+              <a
+                class="
+                  px-4
+                  py-2
+                  mt-2
+                  text-sm
+                  font-semibold
+                  bg-transparent
+                  rounded-lg
+                  uppercase
+                  md:mt-0 md:ml-4
+                  hover:text-gray-900
+                  focus:text-gray-900
+                  hover:bg-gray-200
+                  focus:bg-gray-200 focus:outline-none focus:shadow-outline
+                "
+                href="#"
+                >SAP Training</a
+              >
+              <!-- SAP Training End -->
+
+              <!-- Online Courses Start -->
+              <a
+                class="
+                  px-4
+                  py-2
+                  mt-2
+                  text-sm
+                  font-semibold
+                  bg-transparent
+                  rounded-lg
+                  uppercase
+                  md:mt-0 md:ml-4
+                  hover:text-gray-900
+                  focus:text-gray-900
+                  hover:bg-gray-200
+                  focus:bg-gray-200 focus:outline-none focus:shadow-outline
+                "
+                href="#"
+                >Online Courses</a
+              >
+              <!-- Online Courses End -->
+              <!-- Apply Start -->
+              <a
+                class="
+                  px-4
+                  py-2
+                  mt-2
+                  text-sm
+                  font-semibold
+                  bg-transparent
+                  rounded-lg
+                  uppercase
+                  md:mt-0 md:ml-4
+                  hover:text-gray-900
+                  focus:text-gray-900
+                  hover:bg-gray-200
+                  focus:bg-gray-200 focus:outline-none focus:shadow-outline
+                "
+                href="#"
+                >Apply</a
+              >
+              <!-- Apply -->
+              <!-- Contact Start -->
+              <a
+                class="
+                  px-4
+                  py-2
+                  mt-2
+                  text-sm
+                  font-semibold
+                  bg-transparent
+                  rounded-lg
+                  uppercase
+                  md:mt-0 md:ml-4
+                  hover:text-gray-900
+                  focus:text-gray-900
+                  hover:bg-gray-200
+                  focus:bg-gray-200 focus:outline-none focus:shadow-outline
+                "
+                href="#"
+                >Contact</a
+              >
+              <!-- Contact -->
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Swiper -->
+    <section>
+      <div class="pt-14 md:pt-0 w-full"></div>
+      <div class="swiper mb-2 md:mb-16 mySwiper">
+        <div class="swiper-wrapper">
+          <div
+            style="
+              background-image: url(https://cdn.pixabay.com/photo/2019/02/06/16/32/architect-3979490_960_720.jpg);
+            "
+            class="swiper-slide slider-bg flex flex-col"
+          >
+            <h2
+              class="
+                text-white
+                p-2
+                bg-opacity-50 bg-gray-600
+                text-3xl
+                mb-5
+                font-semibold
+              "
+            >
+              Welcome to Engineering Resourse Academy
+            </h2>
+            <a href="" class="px-4 py-2 bg-indigo-600 text-white"
+              >Enroll for a course today</a
+            >
+          </div>
+          <div
+            style="
+              background-image: url(https://cdn.pixabay.com/photo/2014/09/13/21/46/milling-444493_960_720.jpg);
+            "
+            class="swiper-slide slider-bg flex flex-col"
+          >
+            <h2
+              class="
+                text-white
+                p-2
+                bg-opacity-50 bg-gray-600
+                text-3xl
+                mb-5
+                font-semibold
+              "
+            >
+              Upcoming Events
+            </h2>
+            <a href="" class="px-4 py-2 bg-indigo-600 text-white"
+              >View Upcoming Events</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container mx-auto mb pt-16 md:pt-0">
+      <h1>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Non
+        praesentium molestiae ipsa rem eum voluptas officia, eaque nemo eos
+        accusamus assumenda optio quis repudiandae illum itaque necessitatibus
+        vel odio aspernatur! Exercitationem veniam facilis maxime voluptatem, in
+        eveniet voluptatum provident sequi reiciendis officiis dolorem sit,
+        beatae aliquam. Nihil iusto ad porro tenetur eveniet minima itaque
+        excepturi eum architecto illo facere repellat rem eos dicta ducimus
+        nobis, ipsam fuga quos quae quidem. Dolor distinctio perferendis
+        repellat consequatur expedita laboriosam sunt quam tenetur unde
+        provident cum vitae necessitatibus non debitis perspiciatis sit modi
+        voluptate ex culpa deserunt, tempora qui a aperiam consectetur? Esse
+        magnam ea sequi, quas eius iste similique quam unde optio. Eum beatae
+        dolor voluptatibus aliquam molestiae amet culpa velit? Ducimus vitae
+        dignissimos earum cumque! Eius voluptatibus nostrum officiis mollitia
+        consequatur inventore sit blanditiis dignissimos. Ullam reiciendis
+        minima fuga obcaecati, porro cum veniam quod reprehenderit? Recusandae
+        laudantium sint consectetur? Sed consequatur corrupti eaque molestias
+        adipisci ipsum ad, nesciunt nam nobis repellendus assumenda eius laborum
+        possimus sequi optio aut beatae doloribus fugit mollitia dicta
+        exercitationem deleniti. Explicabo accusantium, cum ducimus quibusdam
+        consequuntur soluta accusamus ullam quae velit itaque possimus deleniti
+        aliquid sed aliquam placeat qui neque, quod libero sit ipsa tenetur
+        error! Dicta velit ipsa pariatur animi fugit amet fuga et. A quaerat
+        laboriosam, tenetur animi, explicabo quo at, assumenda quisquam ipsum
+        natus aut consequuntur asperiores vitae alias. Iste corrupti, veniam
+        voluptates, eos rerum cupiditate doloribus dolorem, autem architecto
+        fugit aliquam assumenda. Perspiciatis aliquid omnis, nostrum ut impedit
+        nihil exercitationem aliquam repellendus, minima mollitia iure tempora
+        inventore aperiam velit labore, dolor officiis quo natus voluptas!
+        Provident unde eius id? Sit debitis eligendi maiores perferendis est
+        excepturi nisi ea ex maxime culpa cupiditate iure facere deserunt illum
+        accusamus tempora aperiam quisquam voluptatem vel, porro, incidunt quos
+        quia! A porro praesentium autem voluptatem illum beatae, explicabo eaque
+        in quasi, quidem vel dicta nihil? Autem, minus. Vitae pariatur quis
+        doloremque impedit. Qui atque fuga pariatur libero quia magni, ipsam
+        numquam veritatis! Eligendi, voluptatem quis illo, quas quibusdam quos
+        accusantium, deserunt animi velit pariatur officiis dolorem. Praesentium
+        eligendi id nemo eveniet doloremque? Earum ipsam sint laboriosam
+        mollitia sit? Iste unde nostrum minus, ad enim perferendis accusantium!
+        Ipsum reprehenderit accusantium nemo sed eum sequi et assumenda,
+        obcaecati officiis animi reiciendis officia recusandae numquam dolor
+        doloribus voluptas nisi dolores iusto enim laboriosam. Natus id, amet
+        autem temporibus alias consequuntur deleniti, quia exercitationem error
+        quaerat facere eaque velit deserunt perferendis? Sequi consectetur ipsam
+        et nemo provident architecto dolores dolorem quae numquam omnis
+        corrupti, modi beatae. Dolor ipsam similique dolorem error soluta
+        exercitationem quasi numquam iusto ut corporis tenetur quae deleniti,
+        repellendus, ratione fuga facere asperiores. Hic facilis, laborum itaque
+        quos dolor dolore ea architecto ipsam maxime ipsum error illo, quod,
+        sequi odit ab odio recusandae sed cum nihil doloribus iure qui nobis
+        unde? Suscipit, mollitia, veniam nisi cupiditate inventore eveniet
+        nesciunt temporibus voluptate fuga sunt, repellat similique error optio
+        nihil doloremque quos nobis. Quos laudantium tempore amet a officiis,
+        minus in quibusdam possimus. Laborum mollitia modi ea architecto magni
+        provident doloribus. Reprehenderit, quia eaque delectus reiciendis
+        obcaecati illum id, dolorem quaerat a quae, odit officia blanditiis
+        iusto at placeat. Soluta dolores iusto earum! Error, eaque. Ratione
+        fugit cum sint quia? Distinctio rerum similique sequi quaerat. Velit hic
+        molestias dolorem explicabo numquam ullam tempore a aut corporis, libero
+        voluptates architecto exercitationem asperiores quos sed totam tempora
+        ipsum labore eveniet quas iste voluptas! Ullam accusantium omnis vitae
+        nisi maxime porro? Illo voluptatum, sapiente exercitationem natus vero
+        culpa. Maxime, molestias ducimus quidem doloremque veniam voluptate
+        architecto minima totam quisquam omnis pariatur illo iste eaque autem
+        cupiditate ipsam nemo, dignissimos ex dolore! Iste blanditiis aspernatur
+        quisquam voluptas rerum minus hic molestias vero odit. Rem similique
+        ipsam id impedit culpa ab debitis delectus iste esse facilis excepturi
+        amet recusandae voluptates, eligendi reprehenderit omnis perspiciatis,
+        enim, odio magnam? Ratione dolor esse adipisci suscipit iusto atque
+        minima non? Vitae sint incidunt recusandae quasi, dignissimos iure eius,
+        nam veniam obcaecati error laudantium esse magnam temporibus maiores
+        velit quis accusantium id reiciendis enim libero at rem. Eos, corporis!
+        Hic, sed dicta! Ullam, dolorem. Pariatur, maiores molestias! Veniam
+        dolore, ut esse culpa optio aspernatur porro illo provident cumque
+        debitis, repellendus exercitationem maxime atque explicabo velit
+        voluptas? Dignissimos neque et eveniet quae consequatur! Consequuntur
+        pariatur suscipit praesentium magnam similique molestias corporis
+        mollitia aliquid odit dignissimos, dolore nulla quo incidunt aliquam
+        nemo deleniti ipsa culpa beatae nobis voluptates accusamus? Impedit nemo
+        corrupti veritatis esse expedita sunt facere repellendus consectetur
+        deleniti vitae voluptates doloribus error in maiores necessitatibus
+        nesciunt, aut quibusdam, iure iusto repellat. Quia velit quisquam eaque
+        sapiente consectetur aliquid aspernatur mollitia animi. Illum libero
+        fugiat id incidunt quia eos enim ullam maxime at sit ut sint, rerum
+        molestiae reprehenderit quod eum dolore modi officiis voluptatum
+        consectetur tenetur numquam! Dolores impedit iusto iure consectetur.
+        Alias, quam? Laudantium consequuntur placeat itaque id?
+      </h1>
+    </div>
+    <!-- Foooter -->
+    <footer class="bg-indigo-900">
       <div
         class="
           container
           px-4
+          py-12
           mx-auto
-          flex flex-wrap
-          items-center
-          justify-between
+          space-y-8
+          overflow-hidden
+          sm:px-6
+          lg:px-8
         "
       >
-        <div
-          class="
-            w-full
-            relative
-            flex
-            justify-between
-            lg:w-auto
-            px-4
-            lg:static lg:block lg:justify-start
-          "
-        >
-          <a
-            class="
-              text-sm
-              font-bold
-              leading-relaxed
-              inline-block
-              mr-4
-              py-2
-              whitespace-nowrap
-              uppercase
-              text-white
-            "
-            href="#pablo"
-          >
-            pink Color
+        <nav class="flex flex-wrap justify-center -mx-5 -my-2">
+          <div class="px-5 py-2">
+            <a
+              href="#"
+              class="text-base leading-6 text-gray-400 hover:text-gray-200"
+            >
+              About
+            </a>
+          </div>
+          <div class="px-5 py-2">
+            <a
+              href="#"
+              class="text-base leading-6 text-gray-400 hover:text-gray-200"
+            >
+              Blog
+            </a>
+          </div>
+          <div class="px-5 py-2">
+            <a
+              href="#"
+              class="text-base leading-6 text-gray-400 hover:text-gray-200"
+            >
+              Team
+            </a>
+          </div>
+          <div class="px-5 py-2">
+            <a
+              href="#"
+              class="text-base leading-6 text-gray-400 hover:text-gray-200"
+            >
+              Pricing
+            </a>
+          </div>
+          <div class="px-5 py-2">
+            <a
+              href="#"
+              class="text-base leading-6 text-gray-400 hover:text-gray-200"
+            >
+              Contact
+            </a>
+          </div>
+          <div class="px-5 py-2">
+            <a
+              href="#"
+              class="text-base leading-6 text-gray-400 hover:text-gray-200"
+            >
+              Terms
+            </a>
+          </div>
+        </nav>
+        <div class="flex justify-center mt-8 space-x-6">
+          <a href="#" class="text-gray-500 hover:text-gray-400">
+            <span class="sr-only">Facebook</span>
+            <svg
+              class="w-6 h-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
           </a>
-          <button
-            class="
-              cursor-pointer
-              text-xl
-              leading-none
-              px-3
-              py-1
-              border border-solid border-transparent
-              rounded
-              bg-transparent
-              block
-              lg:hidden
-              outline-none
-              focus:outline-none
-            "
-            type="button"
+          <a href="#" class="text-gray-500 hover:text-gray-400">
+            <span class="sr-only">Instagram</span>
+            <svg
+              class="w-6 h-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-500 hover:text-gray-400">
+            <span class="sr-only">Twitter</span>
+            <svg
+              class="w-6 h-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"
+              ></path>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-500 hover:text-gray-400">
+            <span class="sr-only">YouTube</span>
+            <svg
+              class="w-6 h-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M16.23 7.102c-2.002-.136-6.462-.135-8.461 0-2.165.148-2.419 1.456-2.436 4.898.017 3.436.27 4.75 2.437 4.898 1.999.135 6.459.136 8.461 0 2.165-.148 2.42-1.457 2.437-4.898-.018-3.436-.271-4.75-2.438-4.898zm-6.23 7.12v-4.444l4.778 2.218-4.778 2.226zm2-12.222c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"
+              />
+            </svg>
+          </a>
+          <a href="#" class="text-gray-500 hover:text-gray-400">
+            <span class="sr-only">LinkedIn</span>
+            <svg
+              class="w-6 h-6"
+              fill="currentColor"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"
+              />
+            </svg>
+          </a>
+        </div>
+        <p class="mt-8 text-base leading-6 text-center text-gray-400">
+          Copyright &copy; <span id="year"></span>
+          <a href="/" class="underline hover:text-gray-300"
+            >Engineering Resourses Academy</a
           >
-            <span class="block relative w-6 h-px rounded-sm bg-white"></span>
-            <span
-              class="block relative w-6 h-px rounded-sm bg-white mt-1"
-            ></span>
-            <span
-              class="block relative w-6 h-px rounded-sm bg-white mt-1"
-            ></span>
-          </button>
-        </div>
-        <div class="lg:flex flex-grow items-center" id="example-navbar-warning">
-          <ul class="flex flex-col lg:flex-row list-none ml-auto">
-            <li class="nav-item">
-              <a
-                class="
-                  px-3
-                  py-2
-                  flex
-                  items-center
-                  text-xs
-                  uppercase
-                  font-bold
-                  leading-snug
-                  text-white
-                  hover:opacity-75
-                "
-                href="#pablo"
-              >
-                Discover
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="
-                  px-3
-                  py-2
-                  flex
-                  items-center
-                  text-xs
-                  uppercase
-                  font-bold
-                  leading-snug
-                  text-white
-                  hover:opacity-75
-                "
-                href="#pablo"
-              >
-                Profile
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="
-                  px-3
-                  py-2
-                  flex
-                  items-center
-                  text-xs
-                  uppercase
-                  font-bold
-                  leading-snug
-                  text-white
-                  hover:opacity-75
-                "
-                href="#pablo"
-              >
-                Settings
-              </a>
-            </li>
-          </ul>
-        </div>
+          All rights reserved.
+        </p>
       </div>
-    </nav>
-    <h1>asdfyuiop[]</h1>
+    </footer>
+    <!-- Swiper JS -->
+    <script src="js/swiper-bundle.min.js"></script>
+
+    <script>
+      // Initialize Swiper
+      var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 10,
+        centeredSlides: true,
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
+      });
+
+      let year = new Date().getFullYear();
+      document.getElementById("year").innerHTML = year;
+
+      window.onscroll = function () {
+        myFunction();
+      };
+
+      var navbar = document.getElementById("navbar");
+      var sticky = navbar.offsetTop;
+
+      function myFunction() {
+        if (window.pageYOffset >= sticky) {
+          navbar.classList.add("nav-fixed");
+        } else {
+          navbar.classList.remove("nav-fixed");
+        }
+      }
+    </script>
   </body>
 </html>
